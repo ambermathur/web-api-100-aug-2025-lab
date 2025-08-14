@@ -10,7 +10,7 @@ builder.WebHost.ConfigureKestrel(serverOptions => { serverOptions.AddServerHeade
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var connectionString = builder.Configuration.GetConnectionString("db") ?? 
+var connectionString = builder.Configuration.GetConnectionString("db") ??
                        throw new Exception("Need a connection string");
 builder.Services.AddMarten(config =>
 {
@@ -18,6 +18,7 @@ builder.Services.AddMarten(config =>
 
 }).UseLightweightSessions();
 
+builder.Services.AddSingleton<TimeProvider>(_ => TimeProvider.System);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
